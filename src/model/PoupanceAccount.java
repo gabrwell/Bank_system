@@ -12,6 +12,9 @@ public class PoupanceAccount extends Account{
         super(agence, numberAccount, titular);
     }
 
+    public PoupanceAccount(Client titular, int agence, int numberAccount) {
+    }
+
     public void aplicarRendiment () {
         double rendiment = this.money * TAXA_RENDIMENT;
         System.out.printf("Rendiment of: R$ %.2f " + rendiment);

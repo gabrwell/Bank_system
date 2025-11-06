@@ -1,11 +1,17 @@
 package model;
 
+import enums.StatusAccount;
+
+import java.sql.SQLOutput;
+
 public abstract class Account {
 
     protected int agence;
     protected int numberAccount;
     protected double money;
     protected Client titular;
+
+    protected StatusAccount status;
 
     public Account () {
 
@@ -16,7 +22,11 @@ public abstract class Account {
         this.numberAccount = numberAccount;
         this.titular = titular;
         this.money = 0.0;
+
+        this.status = StatusAccount.ACTIVE;
     }
+
+
 
     public void sacar(double value) {
         if (value <= 0) {
@@ -47,6 +57,34 @@ public abstract class Account {
 
     }
 
+    public StatusAccount getStatus() {
+        return status;
+    }
+
+    public void blockAccount () {
+        if (this.status == StatusAccount.ENDED) {
+            System.out.println("Not possible to block one account alredy ended");
+            return;
+        }
+        this.status = StatusAccount.BLOCKED;
+    System.out.println("Account" + this.numberAccount + "blocked");
+    }
+
+    public void endedAccount () {
+        if (this.money != 0) {
+            System.out.println("Not possible to ended with money. Money actualy: " + this.money);
+        }
+        this.status = StatusAccount.ENDED;
+        System.out.println("Account: " + this.numberAccount + "Ended");
+    }
+
+    public void activeAccount() {
+        this.status = StatusAccount.ACTIVE;
+        System.out.println("Account: " + this.numberAccount + "Active");
+    }
+
+
+
     public int getAgence() {
         return agence;
     }
@@ -71,6 +109,10 @@ public abstract class Account {
 
     public void setTitular(Client titular) {
         this.titular = titular;
+    }
+
+    public double getMoney() {
+        return money;
     }
 
     public abstract void imprimirExtrato();

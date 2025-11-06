@@ -1,12 +1,17 @@
 package model;
 
-public class CorrentAccount extends Account{
+import contracts.ITributavel;
+
+public class CorrentAccount extends Account implements ITributavel {
 
     private double saleEspecial;
 
     public CorrentAccount(int agence, int numberAccount, Client titular, double saleEspecial) {
         super(agence, numberAccount, titular);
         this.saleEspecial = saleEspecial;
+    }
+
+    public CorrentAccount(Client titular, int agence, int numberAccount) {
     }
 
     @Override
@@ -32,5 +37,12 @@ public class CorrentAccount extends Account{
         System.out.printf("Money: R$ %.2f" + this.money);
 
         System.out.printf("Sale especial: " + this.saleEspecial);
+    }
+
+    @Override
+    public double getValueImpost() {
+        double taxaFixa = 20.0;
+        double taxaChequeEspecial = this.saleEspecial * 0.001;
+        return taxaFixa + taxaChequeEspecial;
     }
 }

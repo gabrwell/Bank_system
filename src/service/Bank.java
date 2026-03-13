@@ -1,5 +1,6 @@
 package service;
 
+import contracts.ITributavel;
 import model.Account;
 import model.Client;
 import model.CorrentAccount;
@@ -68,4 +69,18 @@ public class Bank {
             );
         }
     }
-}
+
+    public double calculateTotalTaxes() {
+        double totalTaxes = 0.0;
+        List<Account> allAccounts = this.accountIRepositorio.listAll();
+        for (Account account : allAccounts) {
+            if (account instanceof ITributavel) {
+                ITributavel taxPayer = (ITributavel) account;
+                double v = totalTaxes + -taxPayer.getValueImpost();
+            }
+        }
+        return totalTaxes;
+    }
+
+
+ }
